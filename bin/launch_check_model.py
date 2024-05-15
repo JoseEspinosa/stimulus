@@ -4,6 +4,7 @@ import argparse
 import os
 import json
 import yaml
+import torch
 
 from launch_utils import import_class_from_file, get_experiment
 from json_schema import JsonSchema
@@ -65,6 +66,9 @@ class CheckModelWrapper():
 
 def main(data_path: str, model_path: str, experiment_config: str, config_path: str, num_samples: int):
 
+    # If GPU is available, check if we are using it
+
+
     # TODO update to yaml the experimnt config
     # load json into dictionary
     exp_config = {}
@@ -118,6 +122,16 @@ def main(data_path: str, model_path: str, experiment_config: str, config_path: s
     
     # Tune the model and get the tuning results
     results = learner.tune()
+
+    # Check if running on GPU when available
+    if torch.cuda.is_available():
+        print("GPU is available.")
+        # check that learner.tune() is using the GPU
+        for trial in results.trials:
+            if trial.resources.get("gpu", 0) == 0:
+                raise TypeError("Trial is not using GPU.")
+    else:
+        print("GPU is not available. Using CPU.")
 
     # check that there were no errors during tuning. Tune still sends exitcode 0 even on internal errors.
     for i in range(len(results)):
