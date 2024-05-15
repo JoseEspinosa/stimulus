@@ -39,7 +39,13 @@ class TuneWrapper():
         """
         Prepare the tuner with the configs.
         """
-        return tune.Tuner(TuneModel,
+        # Check if GPUs are available. If not, use CPUs.
+        resources = {}
+        if torch.cuda.is_available():
+            resources = {"gpu": 1}
+        else:
+            resources = {"cpu": 1} # TODO: this was also the default before, we may want to allow the user to define this (how many cpus to use)
+        return tune.Tuner(tune.with_resources(TuneModel,resources),
                             tune_config= self.tune_config,
                             param_space=self.config,
                             run_config=self.run_config,
