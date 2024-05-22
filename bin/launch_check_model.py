@@ -123,6 +123,12 @@ def main(data_path: str, model_path: str, experiment_config: str, config_path: s
     # Tune the model and get the tuning results
     results = learner.tune()
 
+    # -----------------------------------------------------
+    print(torch.cuda.is_available())
+    print(torch.cuda.device_count())
+    print(torch.cuda.current_device())
+    print(torch.cuda.get_device_name(0))
+    
     # Check if running on GPU when available
     if torch.cuda.is_available():
         print("GPU is available.")
