@@ -3,7 +3,7 @@ process STIMULUS_SHUFFLE_CSV {
 
     tag "$random_parsed_json"
     label 'process_medium'
-    container 'alessiovignoli3/stimulus:stimulus_v0.2'
+    container 'cbcrg/stimulus:stimulus_v0.3'
 
     input:
     tuple path(original_csv), path(random_parsed_json)

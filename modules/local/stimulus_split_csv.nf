@@ -3,7 +3,7 @@ process STIMULUS_SPLIT_CSV {
     
     tag "$parsed_json"
     label 'process_low'
-    container 'alessiovignoli3/stimulus:stimulus_v0.2'
+    container 'cbcrg/stimulus:stimulus_v0.3'
 
     input:
     tuple path(csv), path(parsed_json)

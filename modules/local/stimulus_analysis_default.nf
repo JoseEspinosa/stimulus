@@ -3,7 +3,7 @@ process STIMULUS_ANALYSIS_DEFAULT {
 
     tag "$model-$data"
     label 'process_medium'
-    container "alessiovignoli3/stimulus:stimulus_v0.2"
+    container "cbcrg/stimulus:stimulus_v0.3"
 
     input:
     tuple val(original_csv), \
